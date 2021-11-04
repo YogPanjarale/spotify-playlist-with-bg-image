@@ -123,10 +123,11 @@ const Form = ({ user }: { user: User }) => {
 					<img
 						src={imageAsUrl.imgUrl}
 						alt="background image preview"
-						className="w-10 "
+						className="w-12 "
+                        title={imageAsUrl.imgUrl}
 					/>
 					<input type="file" onChange={handleImageAsFile} />
-					{imageAsFile&& <button onClick={uploadImage}>
+					{imageAsFile&& <button onClick={uploadImage} title="Upload">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							className="h-6 w-6"

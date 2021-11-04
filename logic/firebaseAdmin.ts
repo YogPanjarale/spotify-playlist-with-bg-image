@@ -15,8 +15,8 @@ admin.initializeApp({
 }
 export async function getData(name: string) {
     const doc = await admin.firestore().collection('songs').where('name',"==",name).get();
-    console.log(doc.docs[0].data());
-    console.log("============================================")
+    // console.log(doc.docs[0].data());
+    // console.log("============================================")
     return doc.docs[0].data();
 }
 export default admin;

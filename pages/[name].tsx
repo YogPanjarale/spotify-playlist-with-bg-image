@@ -1,4 +1,5 @@
 import {getData} from "../logic/firebaseAdmin";
+import Head from "next/head";
 type Data = {
     name: string,
     link: string,
@@ -13,6 +14,11 @@ export default function Page({data}:{data:Data}) {
 		return /[\w0-9]{22}/g.exec(numMatch[0])[0];
     }
     return (
+        <>
+        <Head>
+            <title>{data.name}</title>
+            <link rel="icon" href="https://img.icons8.com/fluency/96/000000/flute.png" />
+        </Head>
 <div className="flex justify-center items-center h-screen" 
 dangerouslySetInnerHTML={{__html:`
 <iframe
@@ -32,15 +38,15 @@ iframe{
 }
 </style>
 `}}></div>
-
+</>
     )
 }
 
 export async function getStaticProps({ params }) {
     const { name } = params;
-    console.log(name," ================================");
+    // console.log(name," ================================");
     const data = await getData(name);
-    console.log(data," ================================");
+    // console.log(data," ================================");
     return {
         props: {
         data,

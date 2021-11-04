@@ -35,7 +35,7 @@ function Home() {
 		<div className="flex flex-col items-center justify-center min-h-screen py-2">
 			<Head>
 				<title>Music Page</title>
-				<link rel="icon" href="/favicon.ico" />
+				<link rel="icon" href="https://img.icons8.com/fluency/96/000000/flute.png" />
 			</Head>
 
 			<main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
