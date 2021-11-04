@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import getDoc from "../logic/getDoc";
 import updateDoc from "../logic/updateDoc";
 import TextInput from "./TextInput";
-
+import Link from "next/link";
 
 const Form = ({ user }: { user: User }) => {
 	const [nameErr, setNameErr] = useState("");
@@ -36,7 +36,6 @@ const Form = ({ user }: { user: User }) => {
 		//correct link https://open.spotify.com/playlist/4Zuu8wXfx9MYLRA17GeLQc?si=dbe563bb1eaa431e
 		if (!link.startsWith("https://open.spotify.com/")) return false;
 		const numMatch = /\/[\w0-9]{22}/g.exec(link);
-		console.log(numMatch);
 		return /[\w0-9]{22}/g.exec(numMatch[0])[0];
 	};
 	const isValidName = (name: string) => {
@@ -172,7 +171,7 @@ const Form = ({ user }: { user: User }) => {
 				>
 					{doc === undefined ? "Add Playlist" : "Update Playlist"}
 				</button>
-                {doc === undefined ? null : <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={()=>router.push(doc.name)}> Visit </button>}
+                {doc === undefined ? null : <Link href={"/"+doc.name}><button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={()=>router.push(doc.name)} title="Visit the page"> Visit </button></Link>}
 
 			</form>
 		</div>
