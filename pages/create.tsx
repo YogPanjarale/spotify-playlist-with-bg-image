@@ -26,7 +26,7 @@ const auth = firebase.auth();
 const firestore = firebase.firestore();
 
 const signin = () => {
-	firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider());
+	firebase.auth().signInWithRedirect(new firebase.auth.GoogleAuthProvider());
 };
 
 function Home() {
