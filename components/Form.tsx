@@ -55,7 +55,7 @@ const Form = ({ user }: { user: User }) => {
 	};
 
 	return (
-		<div className="flex flex-col space-y-4 max-w-md">
+		<div className="flex flex-col space-y-4 max-w-xs  md:max-w-md m-4 p-6 pt-6">
 			<div>
 				<h1 className="text-lg text-bold font-poppins">
 					Hello {user.displayName}!
