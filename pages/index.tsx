@@ -7,6 +7,7 @@ import "firebase/compat/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import SignIn from "../components/signin";
+import Form from "../components/Form";
 
 const firebaseConfig = {
 	apiKey: "AIzaSyDsFZ-5rUVyEWNxyhH0l2KVJlF_hgwAheo",
@@ -42,7 +43,7 @@ function Home() {
 					<h1 className="text-6xl font-bold">Music Page Generator</h1>
 				)}
         {error && <h1 className="text-6xl font-bold">Error</h1>}
-        {user ? <h1>Login</h1> : <SignIn onClick={signin}/>}
+        {user ? <Form user={user}/> : <SignIn onClick={signin}/>}
 			</main>
 
 			<footer className="flex items-center justify-center w-full h-24 border-t">
