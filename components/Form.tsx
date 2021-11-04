@@ -1,10 +1,12 @@
 import { User } from "firebase/auth";
 import firebase from "firebase/compat/app";
 import "firebase/compat/storage";
+import { useRouter } from 'next/router'
 import { useEffect, useState } from "react";
 import getDoc from "../logic/getDoc";
 import updateDoc from "../logic/updateDoc";
 import TextInput from "./TextInput";
+
 
 const Form = ({ user }: { user: User }) => {
 	const [nameErr, setNameErr] = useState("");
@@ -17,6 +19,7 @@ const Form = ({ user }: { user: User }) => {
 	const [imageAsUrl, setImageAsUrl] = useState(allInputs);
 	const [imageErr, setImageErr] = useState("");
 	const [doc, setDoc] = useState(undefined);
+    const router = useRouter();
 	useEffect(() => {
 		(async () => {
 			const doc = await getDoc();
@@ -24,14 +27,14 @@ const Form = ({ user }: { user: User }) => {
 			if (doc) {
 				setName(doc.name);
 				setLink(doc.link);
-				setImageAsUrl({imgUrl:doc.imgUrl});
-                setIsDisabled(false);
+				setImageAsUrl({ imgUrl: doc.background });
+				setIsDisabled(false);
 			}
 		})();
 	}, []);
 	const isValidLink = (link: string) => {
 		//correct link https://open.spotify.com/playlist/4Zuu8wXfx9MYLRA17GeLQc?si=dbe563bb1eaa431e
-		if (!link.startsWith("https://open.spotify.com/"))return false;
+		if (!link.startsWith("https://open.spotify.com/")) return false;
 		const numMatch = /\/[\w0-9]{22}/g.exec(link);
 		console.log(numMatch);
 		return /[\w0-9]{22}/g.exec(numMatch[0])[0];
@@ -53,7 +56,7 @@ const Form = ({ user }: { user: User }) => {
 	};
 
 	return (
-		<div className="flex flex-col space-y-4">
+		<div className="flex flex-col space-y-4 max-w-md">
 			<div>
 				<h1 className="text-lg text-bold font-poppins">
 					Hello {user.displayName}!
@@ -110,7 +113,36 @@ const Form = ({ user }: { user: User }) => {
 						* {nameErr}
 					</span>
 				)}
-				<input type="file" onChange={handleImageAsFile} />
+				<p className="text-sm text-bold font-poppins text-blue-600 text-left truncate ">
+					{imageAsUrl.imgUrl}
+				</p>
+				<div
+					className="flex flex-row space-x-2 appearance-none border-2 border-gray-300 rounded w-full py-1 px-3 focus:outline-none focus:bg-white focus:border-darkgreen
+                leading-10  font-poppins text-base font-normal"
+				>
+					<img
+						src={imageAsUrl.imgUrl}
+						alt="background image preview"
+						className="w-10 "
+					/>
+					<input type="file" onChange={handleImageAsFile} />
+					{imageAsFile&& <button onClick={uploadImage}>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							className="h-6 w-6"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+						>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth={2}
+								d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+							/>
+						</svg>
+					</button>}
+				</div>
 				{imageErr && (
 					<span className="text-xs text-bold font-poppins text-red-600 text-left ">
 						* {imageErr}
@@ -132,10 +164,15 @@ const Form = ({ user }: { user: User }) => {
 							return;
 						}
 						updateDoc({ name, link, background });
+                        getDoc().then((d)=>{
+                            setDoc(d);
+                        })
 					}}
 				>
 					{doc === undefined ? "Add Playlist" : "Update Playlist"}
 				</button>
+                {doc === undefined ? null : <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={()=>router.push(doc.name)}> Visit </button>}
+
 			</form>
 		</div>
 	);

@@ -1,0 +1,9 @@
+body {
+    background-image: url("https://cdn.discordapp.com/attachments/889187772190031942/889195668793602088/wallhaven-e7ek7k.png");
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+iframe{
+max-width: min-content;
+}
